@@ -25,7 +25,6 @@ def getrows(table, start, stop):
     stmt = """
 .mode insert {0}
 select * from {0} where id > {1} and id <= {2};""".format(table, start, stop)
-    print(stmt)
     return subprocess.getoutput("echo '{}' | sqlite3 ~/.selfspy/selfspy.sqlite".format(stmt))
 
 def push(body):
@@ -37,7 +36,6 @@ while True:
         end = getmax(table)
         rows = getrows(table, start, end)
         push(rows)
-        print("successfully pushed")
         tables[table] = end
     time.sleep(interval)
 

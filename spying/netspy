@@ -6,7 +6,7 @@ import time
 import os
 
 SSIDcommand="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | sed -E 's/[[:space:]]+/ /g' | cut -d ' ' -f 3-"
-NotifyCommand="./alerter -title 'Timrr' -message 'Is the network \"{}\" work or personal?' -closeLabel Work -actions Personal"
+NotifyCommand="../../spying/alerter -title 'Timrr' -message 'Is the network \"{}\" work or personal?' -closeLabel Work -actions Personal"
 server=os.getenv('SPY_SERVER', 'http://localhost:5000')
 interval=os.getenv('SPY_INTERVAL', 5)
 lastNet=None

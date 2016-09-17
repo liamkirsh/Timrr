@@ -8,12 +8,14 @@ def run_agent(path):
     p.start()
     p.join()
     """
-
-    subprocess.Popen(["python", path])
+    print "Starting executable '{}'".format(path)
+    subprocess.Popen(path)
 
 def run_all():
     mydaemons = [
-        "selfspy -n"
+        ["/usr/bin/env", "selfspy", "-n"],
+        ["../../spying/spypusher"],
+        ["../../spying/netspy"]
     ]
 
     for daemon in mydaemons:

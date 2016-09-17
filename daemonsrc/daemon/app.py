@@ -1,4 +1,5 @@
 import wx
+import agents
 import taskbar
 
 class MainWindow(wx.Frame):
@@ -14,10 +15,11 @@ class MainWindow(wx.Frame):
         self.sizer = wx.BoxSizer()
         self.sizer.Add(self.button)
 
-        self.panel.SetSizerAndFit(self.sizer)  
+        self.panel.SetSizerAndFit(self.sizer)
         self.Show()
         """
 
 app = wx.App(False)
 win = MainWindow(None)
+agents.run_all()
 app.MainLoop()
