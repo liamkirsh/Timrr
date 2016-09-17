@@ -1,6 +1,8 @@
 import threading
+import requests
 
 work_status = 1
+server = "http://localhost:5000"
 
 def datafetcher():
     t = threading.Timer(interval=1.0, function=fetch_work_status)
@@ -9,9 +11,7 @@ def datafetcher():
 
 def fetch_work_status():
     global work_status
-    import random
-    work_status = random.choice([1, 2, 3])
-    
+    work_status = int(requests.get("{}/status".format(server)).content)
     t = threading.Timer(interval=1.0, function=fetch_work_status)
     t.daemon = True
     t.start()

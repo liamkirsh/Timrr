@@ -1,5 +1,6 @@
 from flask import Flask, request
 from sqlalchemy import exc
+import random
 
 from analyzrr import db
 
@@ -56,3 +57,7 @@ def ingest_data():
         session.commit()
 
     return "OK!"
+
+@api.route('/status', methods=['GET'])
+def get_status():
+    return random.choice(["1", "2", "3"])
