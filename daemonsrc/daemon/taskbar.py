@@ -13,7 +13,7 @@ WXPdemo = wx.lib.embeddedimage.PyEmbeddedImage(
     "vClJoLpIC8gi+VwwfDecEiEtT/WZTJDf94uk1Ru8vbz0cvoF7S2DnpeVL9UAAAAASUVORK5C"
     "YII=")
 
-from images import greenlight, yellowlight
+from images import greenlight, yellowlight, bluelight
 
 class TaskBarIcon(wx.TaskBarIcon):
     TBMENU_RESTORE = wx.NewId()
@@ -38,6 +38,7 @@ class TaskBarIcon(wx.TaskBarIcon):
         # Load icons
         self.greenlight = self.MakeIcon(greenlight.image.GetImage())
         self.yellowlight = self.MakeIcon(yellowlight.image.GetImage())
+        self.bluelight = self.MakeIcon(bluelight.image.GetImage())
 
         # update icon every 500ms
         TIMER_ID = 100
@@ -73,10 +74,12 @@ class TaskBarIcon(wx.TaskBarIcon):
         return icon
 
     def UpdateIcon(self, event):
-        if data.get_work_status():
+        if data.get_work_status() == 1:
             self.SetIcon(self.greenlight, "Timrr")
-        else:
+        elif data.get_work_status() == 2:
             self.SetIcon(self.yellowlight, "Timrr")
+        elif data.get_work_status() == 3:
+            self.SetIcon(self.bluelight, "Timrr")
 
     def OnTaskBarActivate(self, evt):
         if self.frame.IsIconized():

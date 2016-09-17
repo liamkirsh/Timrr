@@ -10,7 +10,7 @@ def datafetcher():
 def fetch_work_status():
     global work_status
     import random
-    work_status = random.choice([True, False])
+    work_status = random.choice([1, 2, 3])
     
     t = threading.Timer(interval=1.0, function=fetch_work_status)
     t.daemon = True
