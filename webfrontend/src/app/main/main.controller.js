@@ -10,9 +10,10 @@ angular.module('inspinia')
     vm.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects.';
 
     TimrrAPI.getDailyStats('2016-09-17').then(function(data) {
-        vm.blocks = data;
+        vm.blocks = data.data;
     });
 
+    /*
     vm.blocks = [{
 	    	from: '2016-09-17T00:00:00.000Z',
 	    	to: '2016-09-17T00:49:00.000Z',
@@ -38,5 +39,6 @@ angular.module('inspinia')
 	    	name: 'Optional'
     	}
     ];
+    */
 
   });
