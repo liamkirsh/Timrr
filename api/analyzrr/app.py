@@ -68,12 +68,12 @@ def work_status():
 
     is_idle = datetime.datetime.now() - time_event > stats.IDLE_TIMEOUT
 
-    is_work_process = stats.APP_CLASSIFIERS['work'].search(process.name)
-    is_work_window = stats.WINDOW_CLASSIFIERS['work'].search(window.title)
+    is_work_process = stats.APP_CLASSIFIERS['work'].search(process.name) is not None
+    is_work_window = stats.WINDOW_CLASSIFIERS['work'].search(window.title) is not None
     is_work_app = is_work_process or is_work_window
 
-    is_personal_process = stats.APP_CLASSIFIERS['personal'].search(process.name)
-    is_personal_window = stats.WINDOW_CLASSIFIERS['personal'].search(window.title)
+    is_personal_process = stats.APP_CLASSIFIERS['personal'].search(process.name) is not None
+    is_personal_window = stats.WINDOW_CLASSIFIERS['personal'].search(window.title) is not None
     is_personal_app = is_personal_process or is_personal_window
 
     # XXX(fubu): In the following decision tree the conditions have to be met
@@ -88,7 +88,7 @@ def work_status():
         elif is_personal_app:
             return "not-working"
 
-    elif network.location == "personal":
+    elif network.location.kind == "personal":
         # network=personal && app=personal && idle=True  => "not-working"
         # network=personal && app=personal && idle=False => "not-working"
         # network=personal && app=work && idle=True      => "not-working"
@@ -98,7 +98,7 @@ def work_status():
         elif is_personal_app:
             return "not-working"
 
-    elif network.location == "work":
+    elif network.location.kind == "work":
         # network=work && app=personal && idle=True  => "unproductive"
         # network=work && app=personal && idle=False => "unproductive"
         # network=work && app=work && idle=True      => "unproductive"
