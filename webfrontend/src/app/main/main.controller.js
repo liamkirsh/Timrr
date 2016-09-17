@@ -1,13 +1,17 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('MainController', function () {
+  .controller('MainController', function (TimrrAPI) {
 
     var vm = this;
 
     vm.userName = 'Swiggity Swooty';
     vm.helloText = 'Timrr - Your handsfree time tracking solution';
     vm.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects.';
+
+    TimrrAPI.getDailyStats('2016-09-17').then(function(data) {
+        vm.blocks = data;
+    });
 
     vm.blocks = [{
 	    	from: '2016-09-17T00:00:00.000Z',
