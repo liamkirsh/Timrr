@@ -21,9 +21,9 @@ def hello_world():
 def ingest_data():
     payload = request.get_json()
 
-    if 'newData' in payload:
-        # newData = "lines_of_sql; delimited by ;\n"
-        sql = payload['newData']
+    if 'spyData' in payload:
+        # spyData = "lines_of_sql; delimited by ;\n"
+        sql = payload['spyData']
         for row in sql.split(";\n"):
             session.execute(row.replace("INSERT INTO", "INSERT OR IGNORE INTO", 1))
 
