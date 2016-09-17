@@ -1,6 +1,8 @@
+import webbrowser
+import data
+import os
 import wx
 import wx.lib.embeddedimage
-import data
 
 WXPdemo = wx.lib.embeddedimage.PyEmbeddedImage(
     "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAWlJ"
@@ -16,10 +18,9 @@ WXPdemo = wx.lib.embeddedimage.PyEmbeddedImage(
 from images import greenlight, yellowlight, bluelight, greylight
 
 class TaskBarIcon(wx.TaskBarIcon):
-    TBMENU_RESTORE = wx.NewId()
+    TBMENU_STOP = wx.NewId()
     TBMENU_CLOSE   = wx.NewId()
-    TBMENU_CHANGE  = wx.NewId()
-    TBMENU_REMOVE  = wx.NewId()
+    TBMENU_DASHBOARD  = wx.NewId()
 
     def __init__(self, frame):
         wx.TaskBarIcon.__init__(self)
@@ -32,8 +33,9 @@ class TaskBarIcon(wx.TaskBarIcon):
 
         # bind some events
         self.Bind(wx.EVT_TASKBAR_LEFT_DCLICK, self.OnTaskBarActivate)
-        self.Bind(wx.EVT_MENU, self.OnTaskBarActivate, id=self.TBMENU_RESTORE)
+        self.Bind(wx.EVT_MENU, self.OnTaskBarActivate, id=self.TBMENU_STOP)
         self.Bind(wx.EVT_MENU, self.OnTaskBarClose, id=self.TBMENU_CLOSE)
+        self.Bind(wx.EVT_MENU, self.OnDashboard, id=self.TBMENU_DASHBOARD)
 
         # Load icons
         self.greenlight = self.MakeIcon(greenlight.image.GetImage())
@@ -46,6 +48,7 @@ class TaskBarIcon(wx.TaskBarIcon):
         self.timer = wx.Timer(self, TIMER_ID)
         self.timer.Start(500)
         wx.EVT_TIMER(self, TIMER_ID, self.UpdateIcon)
+        self.server = os.getenv('SPY_SERVER', "http://localhost:3000")
 
 
     def CreatePopupMenu(self):
@@ -56,8 +59,9 @@ class TaskBarIcon(wx.TaskBarIcon):
         the base class takes care of the rest.
         """
         menu = wx.Menu()
-        menu.Append(self.TBMENU_RESTORE, "Stop Tracking")
-        menu.Append(self.TBMENU_CLOSE,   "Quit Timrr")
+        menu.Append(self.TBMENU_STOP, "Stop Tracking")
+        menu.Append(self.TBMENU_DASHBOARD, "My Dashboard", )
+        menu.Append(self.TBMENU_CLOSE, "Quit Timrr")
         return menu
 
 
@@ -97,6 +101,8 @@ class TaskBarIcon(wx.TaskBarIcon):
     def OnTaskBarClose(self, evt):
         wx.CallAfter(self.frame.Close)
 
+    def OnDashboard(self, evt):
+        webbrowser.open(self.server)
 
 """
 class MainFrame(wx.Frame):
