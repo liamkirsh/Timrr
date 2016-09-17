@@ -11,7 +11,7 @@ def datafetcher():
 
 def fetch_work_status():
     global work_status
-    work_status = int(requests.get("{}/status".format(server)).content)
+    work_status = requests.get("{}/workstatus".format(server))
     t = threading.Timer(interval=1.0, function=fetch_work_status)
     t.daemon = True
     t.start()

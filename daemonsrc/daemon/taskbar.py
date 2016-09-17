@@ -74,12 +74,16 @@ class TaskBarIcon(wx.TaskBarIcon):
         return icon
 
     def UpdateIcon(self, event):
-        if data.get_work_status() == 1:
-            self.SetIcon(self.greenlight, "Timrr")
-        elif data.get_work_status() == 2:
-            self.SetIcon(self.yellowlight, "Timrr")
-        elif data.get_work_status() == 3:
-            self.SetIcon(self.bluelight, "Timrr")
+        work_status = data.get_work_status()
+
+        status_icon = {
+            'productive': self.greenlight,
+            'unproductive': self.yellowlight,
+            'not-working': self.bluelight,
+            'undecided': None,
+        }[work_status]
+
+        self.SetIcon(status_icon, "Timrr")
 
     def OnTaskBarActivate(self, evt):
         if self.frame.IsIconized():
