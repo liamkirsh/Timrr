@@ -5,21 +5,39 @@ import requests
 import time
 import os
 
-command="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep '^\s*SSID:' | awk '{print $2}'"
+SSIDcommand="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | sed -E 's/[[:space:]]+/ /g' | cut -d ' ' -f 3-"
+NotifyCommand="./alerter -title 'Timrr' -message 'Is the network \"{}\" work or personal?' -closeLabel Work -actions Personal"
 server=os.getenv('SPY_SERVER', 'http://localhost:5000')
 interval=os.getenv('SPY_INTERVAL', 5)
 lastNet=None
+networks = {'': 'work'}
 
 print("Started. Last net is: {}".format(lastNet))
 while True:
-    currentNet = subprocess.getoutput(command)
+    currentNet = subprocess.getoutput(SSIDcommand)
     if currentNet != lastNet:
-        print("New net '{}' found".format(currentNet));
-        network = {
-            'fingerprint': currentNet,
-            'kind': 'work' if currentNet == 'HackZurich' else 'personal',
-            'action': 'connect',
-        }
-        requests.post("{}/ingest".format(server), json={'network':network})
+        if not currentNet in networks:
+            print("New net '{}' found, asking about kind".format(currentNet));
+            kind = subprocess.getoutput(NotifyCommand.format(currentNet))
+            networks[currentNet] = kind
+
+        if lastNet is not None and lastNet != '':
+            # inform about disconnect
+            oldnet = {
+                'fingerprint': lastNet,
+                'kind': networks[lastNet],
+                'action': 'disconnect',
+            }
+            print("Disconnected from network '{}'".format(lastNet))
+            requests.post("{}/ingest".format(server), json={'network':oldnet})
+
+        if currentNet != '':
+            network = {
+                'fingerprint': currentNet,
+                'kind': networks[currentNet],
+                'action': 'connect',
+            }
+            print("Connected to network '{}'".format(currentNet))
+            requests.post("{}/ingest".format(server), json={'network':network})
         lastNet = currentNet
     time.sleep(interval)
