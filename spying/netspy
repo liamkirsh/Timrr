@@ -18,7 +18,7 @@ while True:
     if currentNet != lastNet:
         if not currentNet in networks:
             print("New net '{}' found, asking about kind".format(currentNet));
-            kind = subprocess.getoutput(NotifyCommand.format(currentNet))
+            kind = subprocess.getoutput(NotifyCommand.format(currentNet)).lower()
             networks[currentNet] = kind
 
         if lastNet is not None and lastNet != '':
