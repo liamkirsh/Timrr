@@ -1,5 +1,6 @@
 import wx
 import wx.lib.embeddedimage
+import data
 
 WXPdemo = wx.lib.embeddedimage.PyEmbeddedImage(
     "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAWlJ"
@@ -72,12 +73,10 @@ class TaskBarIcon(wx.TaskBarIcon):
         return icon
 
     def UpdateIcon(self, event):
-        import random
-        if random.choice([True, False]):
+        if data.get_work_status():
             self.SetIcon(self.greenlight, "Timrr")
         else:
             self.SetIcon(self.yellowlight, "Timrr")
-
 
     def OnTaskBarActivate(self, evt):
         if self.frame.IsIconized():
