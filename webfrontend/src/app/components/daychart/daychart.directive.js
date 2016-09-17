@@ -17,15 +17,17 @@ angular.module('inspinia')
           $scope.$watch("blocks", function(newValue, oldValue) {
             var blockList = [];
             angular.forEach($scope.blocks, function(value, key) {
-              var width = (new Date(value.to) - new Date(value.from)) / (24*60*60*1000) * 1140; //$scope.daychartWidth;
+              var width = (new Date(value.to) - new Date(value.from)) / (24*60*60*1000) * $scope.daychartWidth; //$scope.daychartWidth;
               
               var startOfDay = Math.floor(new Date(value.from) / (24*60*60*1000)) * (24*60*60*1000);
-              var left = (new Date(value.from) - startOfDay) / (24*60*60*1000) * 1140;
+              var left = (new Date(value.from) - startOfDay) / (24*60*60*1000) * $scope.daychartWidth;
 
+              /*
               console.log("new block");
               console.log(Math.floor(new Date(value.from) / (24*60*60*1000)));
               console.log(new Date(value.from));
               console.log(startOfDay);
+              */
 
               this.push({
                 width: width,
