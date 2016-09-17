@@ -1,5 +1,7 @@
-<div class="daychart">
-	<ng-repeat ng-repeat="block in blockList">
-		<div class="block" ng-style="{'width': '{{block.width}}px', 'left': '{{block.left}}px'}" ng-class="'type-' + block.type"></div>
-	</ng-repeat>
+<div class="daychart"><div class="date">Saturday, 17.09.2016</div><div class="daychartBar">
+		<ng-repeat ng-repeat="block in blockList">
+			<div class="block" ng-style="{'width': '{{block.width}}px', 'left': '{{block.left}}px'}" ng-class="'type-' + block.type"></div>
+		</ng-repeat>
+	</div>
+	<div class="daychartNumbering"></div>
 </div>

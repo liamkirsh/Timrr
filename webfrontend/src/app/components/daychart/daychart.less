@@ -1,18 +1,51 @@
 .daychart {
-	width: 100%;
-	height: 100px;
+	padding: 15px;
+	background-color: #fff;
+	border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 
-	.block {
-		background: #000;
-		height: 100%;
-		position: absolute;
-		top: 0;
+    .date {
+    	text-align: left;
+    	font-weight: bold;
+    	margin-bottom: 10px;
+    }
 
-		&.type-productive {
-			background: #00ff00;
+	.daychartBar {
+		width: 100%;
+		height: 60px;
+		position: relative;
+		margin-bottom: 15px;
+
+		.block {
+			background: #000;
+			height: 100%;
+			position: absolute;
+			top: 0;
+
+			&.type-productive {
+				background: rgb(57, 199, 170);
+			}
+			&.type-notworking {
+				background: #2f4050;
+			}
+			&.type-unproductive {
+				background: rgb(248, 172, 89);
+			}
+			&.type-undecided {
+				background: #fff;
+			}
 		}
-		&.type-undecided {
-			background: #0000ff;
+	}
+
+	.daychartNumbering {
+		width: 100%;
+		height: 15px;
+		position: relative;
+
+		.number {
+			position: absolute;
+			top: 0;
 		}
 	}
 }
