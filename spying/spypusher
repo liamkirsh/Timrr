@@ -6,6 +6,8 @@ import subprocess
 import requests
 import time
 
+server = "http://172.31.3.62:5000"
+
 tables={
     'click': 0,
     'geometry': 0,
@@ -25,7 +27,7 @@ select * from {0} where id > {1} and id <= {2};""".format(table, start, stop)
     return subprocess.getoutput("echo '{}' | sqlite3 ~/.selfspy/selfspy.sqlite".format(stmt))
 
 def push(body):
-    requests.post('http://172.31.3.62:5000/ingest', json={'spyData':body})
+    requests.post('%s/ingest' % server, json={'spyData':body})
 
 while True:
     for table, prevmax in tables.items():
