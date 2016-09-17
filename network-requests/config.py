@@ -6,7 +6,7 @@ PRODUCTIVE_DOMAINS = [
     "github.com",
 ]
 
-NON_PRODUCTIVE_DOMAINS = [
+NONPRODUCTIVE_DOMAINS = [
     "youtube.com",
     "duolingo.com",
     "facebook.com",
