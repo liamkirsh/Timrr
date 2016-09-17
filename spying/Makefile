@@ -15,4 +15,4 @@ install:
 
 run:
 	@echo "Sarting selfspy as a background process. To bring to foreground, run \`fg\`"
-	@nohup selfspy &
+	@nohup selfspy -n &
