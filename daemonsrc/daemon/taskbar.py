@@ -13,7 +13,7 @@ WXPdemo = wx.lib.embeddedimage.PyEmbeddedImage(
     "vClJoLpIC8gi+VwwfDecEiEtT/WZTJDf94uk1Ru8vbz0cvoF7S2DnpeVL9UAAAAASUVORK5C"
     "YII=")
 
-from images import greenlight, yellowlight, bluelight
+from images import greenlight, yellowlight, bluelight, greylight
 
 class TaskBarIcon(wx.TaskBarIcon):
     TBMENU_RESTORE = wx.NewId()
@@ -39,6 +39,7 @@ class TaskBarIcon(wx.TaskBarIcon):
         self.greenlight = self.MakeIcon(greenlight.image.GetImage())
         self.yellowlight = self.MakeIcon(yellowlight.image.GetImage())
         self.bluelight = self.MakeIcon(bluelight.image.GetImage())
+        self.greylight = self.MakeIcon(greylight.image.GetImage())
 
         # update icon every 500ms
         TIMER_ID = 100
@@ -80,7 +81,7 @@ class TaskBarIcon(wx.TaskBarIcon):
             'productive': self.greenlight,
             'unproductive': self.yellowlight,
             'not-working': self.bluelight,
-            'undecided': None,
+            'undecided': self.greylight,
         }[work_status]
 
         self.SetIcon(status_icon, "Timrr")
