@@ -1,0 +1,5 @@
+<div class="daychart">
+	<ng-repeat ng-repeat="block in blockList">
+		<div class="block" ng-style="{'width': '{{block.width}}px', 'left': '{{block.left}}px'}" ng-class="'type-' + block.type"></div>
+	</ng-repeat>
+</div>
