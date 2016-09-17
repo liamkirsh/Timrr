@@ -85,7 +85,7 @@ angular.module('inspinia')
               elem.appendChild(document.createTextNode(i));
 
               elem.className = "number";
-              elem.style.left = ((positionMultiplier * i) - ((i >= 10) ? 7 : 3.5)).toString() + "px";
+              elem.style.left = ((positionMultiplier * i) - ((i >= 10) ? 14 : 0)).toString() + "px";
 
               numberingElem.appendChild(elem);
             }

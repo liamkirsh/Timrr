@@ -1,7 +1,35 @@
-<div class="daychart"><div class="date">Saturday, 17.09.2016</div><div class="daychartBar">
+<div class="daychart">
+	<div class="date">Saturday, 17.09.2016</div>
+	<div class="daychartBar">
 		<ng-repeat ng-repeat="block in blockList">
 			<div class="block" ng-style="{'width': '{{block.width}}px', 'left': '{{block.left}}px'}" ng-class="'type-' + block.type"></div>
 		</ng-repeat>
 	</div>
 	<div class="daychartNumbering"></div>
+	<div class="legend">
+		<div class="legendItem">
+			<div class="border">
+				<div style="border: 5px solid #39c7aa;"></div>
+			</div>
+			Productive time
+		</div>
+		<div class="legendItem">
+			<div class="border">
+				<div style="border: 5px solid #f8ac59;"></div>
+			</div>
+			Unproductive time
+		</div>
+		<div class="legendItem">
+			<div class="border">
+				<div style="border: 5px solid #2f4050;"></div>
+			</div>
+			Free time
+		</div>
+		<div class="legendItem">
+			<div class="border">
+				<div style="border: 5px solid #fff;"></div>
+			</div>
+			Unknown
+		</div>
+	</div>
 </div>

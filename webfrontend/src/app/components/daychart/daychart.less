@@ -16,6 +16,7 @@
 		height: 60px;
 		position: relative;
 		margin-bottom: 15px;
+		border: 1px solid #eee;
 
 		.block {
 			background: #000;
@@ -46,6 +47,35 @@
 		.number {
 			position: absolute;
 			top: 0;
+		}
+	}
+
+	.legend {
+		margin-top: 15px;
+		height: 14px;
+
+		.legendItem {
+			float: left;
+			text-align: left;
+			line-height: 14px;
+			margin-left: 15px;
+
+			&:first-child {
+				margin-left: 0;
+			}
+
+			.border {
+				border: 1px solid #ccc;
+				padding: 1px;
+				float: left;
+				margin-right: 5px;
+
+				div {
+					width: 4px;
+					height: 0;
+					overflow: hidden;
+				}
+			}
 		}
 	}
 }
