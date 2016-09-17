@@ -30,7 +30,7 @@ angular.module('inspinia')
     	{
     		from: '2016-09-17T23:05:00.000Z',
 	    	to: '2016-09-17T23:59:59.000Z',
-	    	type: 'notworking',
+	    	type: 'not-working',
 	    	name: 'Optional'
     	}
     ];
