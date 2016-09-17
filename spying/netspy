@@ -3,9 +3,11 @@
 import subprocess
 import requests
 import time
+import os
 
 command="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep '^\s*SSID:' | awk '{print $2}'"
-server="http://localhost:5000"
+server=os.getenv('SPY_SERVER', 'http://localhost:5000')
+interval=os.getenv('SPY_INTERVAL', 5)
 lastNet=None
 
 print("Started. Last net is: {}".format(lastNet))
@@ -20,4 +22,4 @@ while True:
         }
         requests.post("{}/ingest".format(server), json={'network':network})
         lastNet = currentNet
-    time.sleep(5)
+    time.sleep(interval)

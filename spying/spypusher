@@ -5,9 +5,10 @@
 import subprocess
 import requests
 import time
+import os
 
-server = "http://172.31.3.62:5000"
-interval = 1
+server=os.getenv('SPY_SERVER', 'http://localhost:5000')
+interval=os.getenv('SPY_INTERVAL', 1)
 
 tables={
     'click': 0,
@@ -28,7 +29,7 @@ select * from {0} where id > {1} and id <= {2};""".format(table, start, stop)
     return subprocess.getoutput("echo '{}' | sqlite3 ~/.selfspy/selfspy.sqlite".format(stmt))
 
 def push(body):
-    requests.post('%s/ingest' % server, json={'spyData':body})
+    requests.post('{}/ingest'.format(server), json={'spyData':body})
 
 while True:
     for table, prevmax in tables.items():
