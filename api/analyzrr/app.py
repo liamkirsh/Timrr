@@ -66,7 +66,7 @@ def work_status():
     process, window, time_event = stats.get_last_used_application(session)
     network = stats.get_network_status(session)
 
-    is_idle = datetime.datetime.utcnow() - time_event > stats.IDLE_TIMEOUT
+    is_idle = datetime.datetime.now() - time_event > stats.IDLE_TIMEOUT
 
     is_work_process = stats.APP_CLASSIFIERS['work'].search(process.name)
     is_work_window = stats.WINDOW_CLASSIFIERS['work'].search(window.title)
