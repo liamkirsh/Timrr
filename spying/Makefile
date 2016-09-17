@@ -2,7 +2,7 @@
 
 install:
 	# clone selfspy
-	-git clone https://github.com/gurgeh/selfspy.git
+	-git clone https://github.com/JamesGuthrie/selfspy.git
 	# install selfspy
 	cd selfspy && python setup.py install
 	# install tccutil (used for altering the accessibility db)
