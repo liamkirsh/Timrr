@@ -58,18 +58,16 @@ def _teardown_proxy():
             "sudo sysctl -w net.ipv4.ip_forward=0"
         )
 
+        retval = os.system(
+            "sudo iptables -t nat -D OUTPUT -p tcp -m owner ! --uid-owner root -m multiport --dports 80,443 -j REDIRECT --to-port 8080"
+        )  # FIXME: use the python-iptables bindings?
+
     elif platform == "mac":
         retval = os.system(
             "sudo sysctl -w net.inet.ip.forwarding=0"
         )
         assert not retval
 
-    if platform == "linux":
-        retval = os.system(
-            "sudo iptables -t nat -D OUTPUT -p tcp -m owner ! --uid-owner root -m multiport --dports 80,443 -j REDIRECT --to-port 8080"
-        )  # FIXME: use the python-iptables bindings?
-
-    elif platform == "mac":
         retval = os.system(
             "sudo pfctl -f /etc/pf.conf"
         )
@@ -109,23 +107,24 @@ system is basically GNU with Linux added, or GNU/Linux. All the so-called
         )
         assert not retval
 
+        retval = os.system(
+            "sudo iptables -t nat -A OUTPUT -p tcp -m owner ! --uid-owner root -m multiport --dports 80,443 -j REDIRECT --to-port 8080"
+        )  # FIXME: use the python-iptables bindings?
+        assert not retval
+
     elif platform == "mac":
         retval = os.system(
             "sudo sysctl -w net.inet.ip.forwarding=1"
         )
         assert not retval
 
-    if platform == "linux":
-        retval = os.system(
-            "sudo iptables -t nat -A OUTPUT -p tcp -m owner ! --uid-owner root -m multiport --dports 80,443 -j REDIRECT --to-port 8080"
-        )  # FIXME: use the python-iptables bindings?
-
-    elif platform == "mac":
         pfconf = open("pf.conf", "w")
+        assert pfconf
         pfconf.write(
             "rdr on en2 inet proto tcp to any port 80 -> 127.0.0.1 port 8080\n"
             "rdr on en2 inet proto tcp to any port 443 -> 127.0.0.1 port 8080"
         )
+        pfconf.close()
 
         # configure pf
         retval = os.system("sudo pfctl -f pf.conf")
@@ -146,7 +145,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
 elif sys.platform == "darwin":  # MAC OS X
     platform = "mac"
 else:
-    sys.stderr.write("error: only linux and mac are supported at this time")
+    sys.stderr.write("error: only linux and mac are supported at this time\n")
     sys.exit(1)
     # FIXME: handle windows
 start()
