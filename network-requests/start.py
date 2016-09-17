@@ -27,7 +27,7 @@ def start():
         elif platform == "mac":
             retval = os.system(
                 'sudo security add-trusted-cert -d -r trustRoot -k '
-                '"/Library/Keychains/System.keychain" "~/.mitmproxy/mitmproxy-ca-cert.pem"'
+                '"/Library/Keychains/System.keychain" ~/.mitmproxy/mitmproxy-ca-cert.pem'
             )
             assert not retval
 
@@ -44,7 +44,7 @@ def start():
         #)
         #ret = subprocess.call(["mitmproxy", "-T", "--host", "--verify-upstream-cert"])
         ret = os.system(
-            "sudo python /usr/local/bin/mitmproxy -T --host --verify-upstream-cert"
+            "sudo /usr/local/bin/mitmproxy -T --host --verify-upstream-cert"
         )
         assert not ret
     finally:
@@ -133,7 +133,7 @@ system is basically GNU with Linux added, or GNU/Linux. All the so-called
 
         # enable pf
         retval = os.system("sudo pfctl -e")
-        assert not retval
+        assert retval == 0 or retval == 1
 
         # configure sudoers to allow mitmproxy to access pfctl
         retval = os.system(
