@@ -11,7 +11,7 @@ from analyzrr import db, stats
 class RfcDatetimeJsonEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
+            return obj.isoformat() + '+02:00'
         return super(RfcDatetimeJsonEncoder, self).default(obj)
 
 
