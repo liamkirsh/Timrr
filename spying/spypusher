@@ -19,7 +19,7 @@ tables={
 }
 
 def getmax(table):
-    return subprocess.getoutput("echo 'select MAX(id) from {};' | sqlite3 ~/.selfspy/selfspy.sqlite".format(table))
+    return subprocess.getoutput("echo 'select coalesce(MAX(id),0) from {};' | sqlite3 ~/.selfspy/selfspy.sqlite".format(table))
 
 def getrows(table, start, stop):
     stmt = """
