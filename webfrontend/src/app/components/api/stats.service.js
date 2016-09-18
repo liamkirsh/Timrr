@@ -12,7 +12,7 @@
     return vm;
 
     function init () {
-      vm.server = 'http://172.31.3.62:5000';
+      vm.server = 'http://localhost:5000'; //'http://172.31.3.62:5000';
     }
     
     function getDailyStats(date) {
