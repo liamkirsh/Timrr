@@ -85,8 +85,8 @@ CACHE = {}
 @api.route('/workperiods')
 def work_periods():
     delta = int(request.args.get('delta', 0))
-    if delta < 0 and delta in CACHE:
-        return CACHE[delta]
+    #if delta < 0 and delta in CACHE:
+    #    return CACHE[delta]
 
     events = stats.get_events_for_last_hours(session, delta)
     intervals = stats.create_intervals(session, events)
