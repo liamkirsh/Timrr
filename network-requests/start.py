@@ -66,12 +66,10 @@ def _teardown_proxy():
         retval = os.system(
             "sudo sysctl -w net.inet.ip.forwarding=0"
         )
-        assert not retval
 
         retval = os.system(
             "sudo pfctl -f /etc/pf.conf"
         )
-        assert not retval
 
 '''retval = os.system(
     "sudo route del default gw localhost"
@@ -121,17 +119,14 @@ system is basically GNU with Linux added, or GNU/Linux. All the so-called
         pfconf = open("pf.conf", "w")
         assert pfconf
         pfconf.write(
-            "rdr on en2 inet proto tcp to any port 80 -> 127.0.0.1 port 8080\n"
-            "rdr on en2 inet proto tcp to any port 443 -> 127.0.0.1 port 8080"
+            '''rdr on en1 inet proto tcp to any port 80 user != root -> 127.0.0.1 port 8080 user != root
+rdr on en1 inet proto tcp to any port 443 user != root -> 127.0.0.1 port 8080
+'''
         )
         pfconf.close()
 
-        # configure pf
-        retval = os.system("sudo pfctl -f pf.conf")
-        assert not retval
-
-        # enable pf
-        retval = os.system("sudo pfctl -e")
+        # configure and enable pf
+        retval = os.system("sudo pfctl -evf pf.conf")
         assert retval == 0 or retval == 1
 
         # configure sudoers to allow mitmproxy to access pfctl
