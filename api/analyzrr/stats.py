@@ -83,7 +83,8 @@ WINDOW_CLASSIFIERS = {
         re.IGNORECASE),
 }
 
-IDLE_TIMEOUT = dt.timedelta(minutes=2)
+# IDLE_TIMEOUT = dt.timedelta(minutes=1)
+IDLE_TIMEOUT = dt.timedelta(seconds=30)
 
 def get_last_used_application(session):
     last_click = session.query(models.Click).order_by(models.Click.created_at.desc()).first()    
