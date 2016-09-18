@@ -18,7 +18,6 @@ angular.module('inspinia')
             var blockList = [];
             var startOfPeriod = new Date();
             startOfPeriod.setDate(startOfPeriod.getDate() - 1);
-            console.log(startOfPeriod)
             angular.forEach($scope.blocks, function(value, key) {
               var width = (new Date(value.to) - new Date(value.from)) / (24*60*60*1000) * $scope.daychartWidth;
               var left = (new Date(value.from) - startOfPeriod) / (24*60*60*1000) * $scope.daychartWidth;
@@ -63,7 +62,7 @@ angular.module('inspinia')
               return element.context.firstChild.querySelector('.daychartBar').offsetWidth;
             }
             function onResize() {
-                // uncomment for only fire when $window.innerWidth change   
+                // uncomment for only fire when $window.innerWidth change
                 if (scope.width !== $window.innerWidth)
                 {
                     scope.daychartWidth = getWidth();
@@ -79,16 +78,24 @@ angular.module('inspinia')
             scope.daychartWidth = getWidth();
             angular.element($window).on('resize', onResize);
             scope.$on('$destroy', cleanUp);
+            var startOfPeriod = new Date();
+            startOfPeriod.setDate(startOfPeriod.getDate() - 1);
 
             var numberingElem = element.context.firstChild.querySelector('.daychartNumbering'); //children[1];
             var positionMultiplier = getWidth() / 24.0;
             for (var i = 0; i <= 24; i++) {
               var elem = document.createElement("div");
-
-              elem.appendChild(document.createTextNode(i-24 + 'h'));
+              var d = new Date();
+              d.setHours(d.getHours() - (24 - i));
+              d.setMinutes(0);
+              elem.appendChild(document.createTextNode(d.getHours() + ":00"));
 
               elem.className = "number";
-              elem.style.left = ((positionMultiplier * i) - ((i >= 10) ? 14 : 0)).toString() + "px";
+              var offset = (d - startOfPeriod) / (24*60*60*1000) * scope.daychartWidth;
+              if (offset < 0) {
+                  continue;
+              }
+              elem.style.left = offset + "px";
 
               numberingElem.appendChild(elem);
             }

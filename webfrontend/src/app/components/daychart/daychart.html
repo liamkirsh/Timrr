@@ -5,7 +5,7 @@
         <div class="block"
              ng-style="{'width': '{{block.width}}px', 'left': '{{block.left}}px'}"
              ng-class="'type-' + block.type"
-             uib-tooltip="{{block.start | date: 'EEE H:mm:ss'}} - {{block.end | date: 'EEE H:mm:ss'}}"></div>
+             uib-tooltip="{{block.start | date: 'EEE H:mm'}} - {{block.end | date: 'EEE H:mm'}}"></div>
 		</ng-repeat>
 	</div>
 	<div class="daychartNumbering"></div>
