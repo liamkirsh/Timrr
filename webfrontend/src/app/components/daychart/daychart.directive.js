@@ -18,7 +18,7 @@ angular.module('inspinia')
             var blockList = [];
             angular.forEach($scope.blocks, function(value, key) {
               var width = (new Date(value.to) - new Date(value.from)) / (24*60*60*1000) * $scope.daychartWidth; //$scope.daychartWidth;
-              
+
               var startOfDay = Math.floor(new Date(value.from) / (24*60*60*1000)) * (24*60*60*1000);
               var left = (new Date(value.from) - startOfDay) / (24*60*60*1000) * $scope.daychartWidth;
 
@@ -85,7 +85,7 @@ angular.module('inspinia')
             for (var i = 0; i <= 24; i++) {
               var elem = document.createElement("div");
 
-              elem.appendChild(document.createTextNode(i));
+              elem.appendChild(document.createTextNode(i-24 + 'h'));
 
               elem.className = "number";
               elem.style.left = ((positionMultiplier * i) - ((i >= 10) ? 14 : 0)).toString() + "px";

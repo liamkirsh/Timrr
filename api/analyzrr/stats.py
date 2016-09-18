@@ -107,14 +107,16 @@ def get_network_status(session, before=None):
     return last_network_location
 
 
-def get_events_for_a_day(session, shift=0):
+def get_events_for_last_hours(session, shift=0):
     assert shift <= 0, "can't look into the future!"
-    delta = dt.timedelta(days=shift)
+    delta = dt.timedelta(hours=shift)
 
-    start_of_day = dt.datetime.combine(dt.datetime.today(), dt.time()) + delta
-    end_of_day = min(start_of_day + dt.timedelta(days=1, seconds=-1), dt.datetime.now())
+    start_of_period = dt.datetime.now() + delta
+    end_of_period = dt.datetime.now()
+    print "start of period", start_of_period
+    print "end of period", end_of_period
 
-    return get_events(session, start_of_day, end_of_day)
+    return get_events(session, start_of_period, end_of_period)
 
 
 def get_events(session, start, end):

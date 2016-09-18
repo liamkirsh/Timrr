@@ -88,7 +88,7 @@ def work_periods():
     if delta < 0 and delta in CACHE:
         return CACHE[delta]
 
-    events = stats.get_events_for_a_day(session, delta)
+    events = stats.get_events_for_last_hours(session, delta)
     intervals = stats.create_intervals(session, events)
     work_periods = stats.flatten_intervals(intervals)
     if delta < 0:

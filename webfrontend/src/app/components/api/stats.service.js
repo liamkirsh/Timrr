@@ -16,7 +16,7 @@
     }
     
     function getDailyStats(date) {
-      return $http.get(vm.server + '/workperiods?delta=-1');
+      return $http.get(vm.server + '/workperiods?delta=-24');
     }
 
   });
