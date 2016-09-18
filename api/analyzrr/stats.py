@@ -90,7 +90,9 @@ def get_last_used_application(session):
     last_click = session.query(models.Click).order_by(models.Click.created_at.desc()).first()    
     last_key = session.query(models.Keys).order_by(models.Keys.created_at.desc()).first()
 
-    last_interaction = last_click if last_click.created_at > last_key.created_at else last_key
+    # FIXME(fubu): Sometimes there is no key data...
+    #last_interaction = last_click if last_click.created_at > last_key.created_at else last_key
+    last_interaction = last_click
     return last_interaction.process, last_interaction.window, last_interaction.created_at
 
 
