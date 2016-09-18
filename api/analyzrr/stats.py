@@ -9,16 +9,25 @@ from selfspy import models, stats
 APP_CLASSIFIERS = {
     'work': re.compile(
         r"|".join([
-            r".*term\d?",
+            r"iterm2",
             r"gitx",
             r"Python",
-            r"^System Preferences$",
-            r"^Finder$",
+            r"System Preferences",
+            r"Finder",
+            r"Photoshop",
+            r"Script Editor",
+            r"Preview",
+            r"Activity Monitor",
+            r"Accessibility Inspector",
+            r"Script Editor",
         ]),
         re.IGNORECASE),
     'personal': re.compile(
         r"|".join([
-            r"^Spotify$",
+            r"Spotify",
+            r"Franz",
+            r"Whatsapp",
+            r"AU Lab",
         ]),
         re.IGNORECASE),
 }
@@ -31,30 +40,50 @@ WINDOW_CLASSIFIERS = {
             r"documentation",
             r"python",
             r"man page",
+            r"wxwidget",
+            r"wxpython",
             # general work-related sites
             r"localhost",
-            r"stack overflow",
+            r"slack",
             r"google search",
             r"github",
             r"hack\w?zurich",
+            r"stack overflow",
+            r"super user",
+            r"stack exchange",
+            r"serverfault.com",
+            r"stackexchange.com",
+            r"stackoverflow.com",
+            r"python.org",
+            r"developer.apple.com",
             # Github page titles
             r"(Issues|at (master|[0-9a-f]{40})) · \w+/\w+",
             r"\w+/\w+: \w+",
+            r"github.com",
         ]),
         re.IGNORECASE),
     'personal': re.compile(
         r"|".join([
             # general work-unrelated sites
             r"hacker news",
+            r"news.ycombinator.com",
             r"soundcloud",
             r"twitter",
             r"xkcd",
             r"youtube",
+            r"Facebook",
+            r"facebook.com",
+            r"reddit",
+            r"mixcloud",
+            r"news",
+            r"memes",
+            r"imgur",
+            r"the verge",
         ]),
         re.IGNORECASE),
 }
 
-IDLE_TIMEOUT = dt.timedelta(minutes=5)
+IDLE_TIMEOUT = dt.timedelta(minutes=2)
 
 def get_last_used_application(session):
     last_click = session.query(models.Click).order_by(models.Click.created_at.desc()).first()    
@@ -111,7 +140,7 @@ def create_intervals(session, events):
             'window': event.window,
             'network': network,
             'time_start': event.created_at,
-            'time_end': None,
+            'time_end': event.created_at,
             'classification': 'undecided',
         }
         return new_interval
@@ -205,7 +234,7 @@ def flatten_intervals(intervals):
     def create_new_work_period(interval):
         new_period = {
             'from': interval['time_start'],
-            'to': None,
+            'to': interval['time_end'],
             'type': interval['classification'],
             'name': "Optional"
         }
