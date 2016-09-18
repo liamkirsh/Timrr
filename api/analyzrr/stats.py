@@ -9,7 +9,7 @@ from selfspy import models, stats
 APP_CLASSIFIERS = {
     'work': re.compile(
         r"|".join([
-            r"iterm2",
+            r"term",
             r"gitx",
             r"Python",
             r"System Preferences",
