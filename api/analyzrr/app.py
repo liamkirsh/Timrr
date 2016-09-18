@@ -1,6 +1,7 @@
 import datetime
 
 from flask import Flask, request, json, jsonify
+from flask_cors import CORS
 from sqlalchemy import exc
 import random
 
@@ -18,6 +19,9 @@ class RfcDatetimeJsonEncoder(json.JSONEncoder):
 #   FLASK_DEBUG=1 FLASK_APP=path/to/analyzrr/app.py flask run --host=0.0.0.0
 api = Flask(__name__)
 api.json_encoder = RfcDatetimeJsonEncoder
+
+CORS(api)
+
 session = db.get_session()
 
 @api.teardown_appcontext
@@ -75,9 +79,19 @@ def work_status():
     classification = stats.classify_event(process, window, network, time_event)
     return classification
 
+
+CACHE = {}
+
 @api.route('/workperiods')
 def work_periods():
-    events = stats.get_events_for_a_day(session, int(request.args.get('delta', 0)))
+    delta = int(request.args.get('delta', 0))
+    if delta < 0 and delta in CACHE:
+        return CACHE[delta]
+
+    events = stats.get_events_for_a_day(session, delta)
     intervals = stats.create_intervals(session, events)
     work_periods = stats.flatten_intervals(intervals)
+    if delta < 0:
+        CACHE[delta] = jsonify(work_periods)
+
     return jsonify(work_periods)
