@@ -24,7 +24,7 @@ itsdangerous==0.24
 Jinja2==2.8
 lxml==3.6.4
 MarkupSafe==0.23
-mitmproxy==0.17
+mitmproxy==8.0.0
 passlib==1.6.5
 pathlib2==2.1.0
 pathtools==0.1.2
